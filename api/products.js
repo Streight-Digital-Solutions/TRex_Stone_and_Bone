@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Square-Version": "2025-10-16",
+          "Square-Version": "2026-08-19",
           "Content-Type": "application/json"
         }
       }
