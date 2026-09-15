@@ -1,3 +1,5 @@
+/* global process */
+
 export default async function handler(req, res) {
   const token = process.env.SQUARE_ACCESS_TOKEN;
 
