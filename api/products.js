@@ -19,13 +19,13 @@ export default async function handler(req, res) {
       }
     );
 
-    const data = await response.json();
+    const data = await response.text();
 
     if (!response.ok) {
       return res.status(response.status).json(data);
     }
 
-    return res.status(200).json(data);
+    return res.status(200).send(data);
   } catch (error) {
     return res.status(500).json({
       error: "Failed to connect to Square",
