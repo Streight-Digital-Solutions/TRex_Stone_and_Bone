@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      "https://connect.squareupsandbox.com/v2/catalog/list",
+      "https://connect.squareupsandbox.com/v2/catalog/list?types=ITEM",
       {
         headers: {
           Authorization: `Bearer ${token}`,
