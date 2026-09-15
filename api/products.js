@@ -3,7 +3,7 @@ export default async function handler(req, res) {
 
   if (!token) {
     return res.status(500).json({
-      error: "Square access token is not configured"
+      error: "Square access token is not configured",
     });
   }
 
@@ -14,22 +14,24 @@ export default async function handler(req, res) {
         headers: {
           Authorization: `Bearer ${token}`,
           "Square-Version": "2026-08-19",
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       }
     );
 
-    const text = await response.text();
+    const data = await response.json();
 
-    return res.status(200).json({
-      squareStatus: response.status,
-      squareResponse: text
-    });
+    if (!response.ok) {
+      return res.status(response.status).json(data);
+    }
 
+    res.setHeader("Cache-Control", "no-store");
+
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({
       error: "Failed to connect to Square",
-      details: error.message
+      details: error.message,
     });
   }
 }
