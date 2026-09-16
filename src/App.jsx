@@ -29,7 +29,7 @@ function App() {
             href="#top"
             aria-label="T Rex Stone and Bone Tools home"
           >
-            TSB
+            LOGO
           </a>
 
           <div className="site-nav__links">

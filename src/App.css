@@ -317,7 +317,7 @@
   left: clamp(24px, 6vw, 96px);
   top: clamp(90px, 14vh, 150px);
 
-  width: min(500px, 38vw);
+  width: 100%;
 
   color: var(--bone-dim);
 
@@ -373,7 +373,7 @@
   left: clamp(24px, 6vw, 96px);
   bottom: clamp(90px, 13vh, 135px);
 
-  width: min(430px, 34vw);
+  width: 100%;
 
   color: var(--bone-dim);
 
