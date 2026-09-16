@@ -92,6 +92,39 @@
   color: rgba(233, 220, 196, 0.68);
 }
 
+.product-card__actions {
+  margin-top: 18px;
+}
+
+.product-card__buy {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: var(--heading);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--bone);
+  background: var(--ember);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.product-card__buy:hover:not(:disabled) {
+  background: var(--rust);
+}
+
+.product-card__buy:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.product-card__error {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #d98262;
+}
+
 .product-card__tag {
   position: absolute;
   top: -10px;

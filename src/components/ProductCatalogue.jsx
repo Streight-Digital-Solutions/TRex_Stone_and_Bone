@@ -5,6 +5,31 @@ import './ProductCatalogue.css'
 function ProductCatalogue() {
   const [products, setProducts] = useState([])
   const [status, setStatus] = useState('loading') // loading | ready | error
+  const [checkoutState, setCheckoutState] = useState({}) // { [variationId]: 'loading' | 'error' }
+
+  const handlePurchase = async (variationId) => {
+    if (!variationId) return
+
+    setCheckoutState((prev) => ({ ...prev, [variationId]: 'loading' }))
+
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ variationId }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok || !data.checkoutUrl) {
+        throw new Error(data.error || 'Checkout failed')
+      }
+
+      window.location.href = data.checkoutUrl
+    } catch {
+      setCheckoutState((prev) => ({ ...prev, [variationId]: 'error' }))
+    }
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -55,7 +80,13 @@ function ProductCatalogue() {
       {status === 'ready' && products.length > 0 && (
         <div className="catalogue__grid">
           {products.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              index={index}
+              onPurchase={handlePurchase}
+              purchaseState={checkoutState[product.variationId]}
+            />
           ))}
         </div>
       )}
