@@ -1,81 +1,99 @@
+import { useState } from 'react'
 import ProductCatalogue from './components/ProductCatalogue'
 import knifeImage from './assets/knife_1.png'
 import './App.css'
 
-const menuItems = [
-  { label: 'Home', href: '#top' },
-  { label: 'Collection', href: '#catalogue' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
-]
-
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const closeMenu = () => setMenuOpen(false)
+
   return (
     <>
       <header className="hero" id="top">
-        <div className="hero__veil" aria-hidden="true"></div>
-
-        <div className="hero__knife-wrap">
-          <img
-            className="hero__knife"
-            src={knifeImage}
-            alt="Hand-knapped stone knife with leather-wrapped handle"
-          />
-
-          <nav className="site-nav" aria-label="Primary navigation">
-            <div className="site-nav__links">
-              {menuItems.map((item) => (
-                <a
-                  className="site-nav__link"
-                  href={item.href}
-                  key={item.label}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          </nav>
+        <div className="hero__knife" aria-hidden="true">
+          <img src={knifeImage} alt="" />
         </div>
 
-        <div className="hero__copy">
-          <p className="hero__eyebrow">Rex Stone &amp; Bone Tools</p>
+        <nav className="site-nav" aria-label="Primary navigation">
+          <a
+            className="site-nav__brand"
+            href="#top"
+            aria-label="T Rex Stone and Bone Tools home"
+          >
+            TSB
+          </a>
 
-          <h1>Hand-knapped blades, made the old way.</h1>
+          <div className="site-nav__links">
+            <a href="#top">Home</a>
+            <a href="#catalogue">Collection</a>
+          </div>
 
-          <p className="hero__lede">
-            Terry Gagnon shapes stone, bone, and antler into working knives and
-            tools, each one struck and ground by hand.
-          </p>
+          <button
+            className="site-nav__toggle"
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={
+              menuOpen
+                ? 'Close navigation menu'
+                : 'Open navigation menu'
+            }
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </nav>
 
-          <a className="hero__cta" href="#catalogue">
-            Explore the collection
-            <span aria-hidden="true">→</span>
+        <div
+          className="mobile-menu"
+          id="mobile-menu"
+          data-open={menuOpen}
+        >
+          <a href="#top" onClick={closeMenu}>
+            Home
+          </a>
+
+          <a href="#catalogue" onClick={closeMenu}>
+            Collection
           </a>
         </div>
 
-        <a className="hero__scroll" href="#catalogue">
-          <span>Scroll</span>
+        <div className="hero__content">
+          <p className="hero__eyebrow">
+            Rex Stone &amp; Bone Tools
+          </p>
+
+          <h1>
+            Hand-knapped blades, made the old way.
+          </h1>
+
+          <p className="hero__description">
+            Terry Gagnon shapes stone, bone, and antler into working knives
+            and tools, each one struck and ground by hand.
+          </p>
+
+          <a
+            className="hero__cta"
+            href="#catalogue"
+          >
+            View the collection
+          </a>
+        </div>
+
+        <a
+          className="hero__scroll"
+          href="#catalogue"
+          aria-label="Scroll to the collection"
+        >
+          <span>Explore</span>
           <span aria-hidden="true">↓</span>
         </a>
       </header>
 
       <ProductCatalogue />
-
-      <section className="story" id="about">
-        <h2>Made by hand. Built with history.</h2>
-
-        <p>
-          Every piece begins with raw material and ends with a tool shaped by
-          hand. Stone, bone, and antler are worked slowly and deliberately,
-          preserving the character of the material in every finished piece.
-        </p>
-      </section>
-
-      <footer className="site-footer" id="contact">
-        <p>Rex Stone &amp; Bone Tools</p>
-
-        <a href="#top">Back to top ↑</a>
-      </footer>
     </>
   )
 }

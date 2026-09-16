@@ -1,25 +1,37 @@
 .catalogue {
-  padding: 72px 0 96px;
+  width: min(1120px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 88px 0 110px;
+  color: var(--bone-dim);
 }
 
 .catalogue__intro {
   margin-bottom: 48px;
+  padding: 28px 32px;
+  border: 1px solid rgba(233, 220, 196, 0.18);
+  background: rgba(8, 8, 8, 0.78);
+  backdrop-filter: blur(8px);
+}
+
+.catalogue__intro h2 {
+  color: var(--bone-dim);
 }
 
 .catalogue__intro p {
   margin-top: 8px;
+  color: rgba(233, 220, 196, 0.7);
   font-size: 18px;
 }
 
 .catalogue__status {
   font-family: var(--heading);
   font-style: italic;
-  color: var(--clay);
+  color: var(--bone-dim);
   padding: 40px 0;
 }
 
 .catalogue__status--error {
-  color: var(--rust);
+  color: #d98262;
 }
 
 .catalogue__grid {
@@ -28,36 +40,26 @@
   gap: 40px 32px;
 }
 
-@media (max-width: 900px) {
-  .catalogue__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .catalogue__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .product-card {
   position: relative;
-  background: var(--bone);
-  border: 1px solid var(--border);
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(233, 220, 196, 0.2);
   padding: 20px 20px 28px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
   transform: rotate(calc((var(--tilt-index) - 2) * 0.6deg));
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .product-card:hover {
-  transform: rotate(0deg);
+  transform: rotate(0deg) translateY(-3px);
+  border-color: rgba(233, 220, 196, 0.42);
 }
 
 .product-card__image {
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--bone-dim);
-  border: 1px solid var(--border);
+  background: #111;
+  border: 1px solid rgba(233, 220, 196, 0.16);
   margin-bottom: 16px;
 }
 
@@ -82,21 +84,53 @@
 
 .product-card__body h3 {
   margin-bottom: 6px;
+  color: var(--bone-dim);
 }
 
 .product-card__body p {
   font-size: 15px;
-  color: var(--flint-soft);
+  color: rgba(233, 220, 196, 0.68);
 }
 
 .product-card__tag {
   position: absolute;
   top: -10px;
   right: 16px;
-  background: var(--rust);
+  background: var(--ember);
   color: var(--bone);
   font-family: var(--heading);
   font-size: 15px;
   padding: 6px 14px;
   transform: rotate(3deg);
+}
+
+@media (max-width: 900px) {
+  .catalogue__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .catalogue {
+    width: calc(100% - 36px);
+    padding: 64px 0 80px;
+  }
+
+  .catalogue__intro {
+    padding: 22px 20px;
+    margin-bottom: 32px;
+  }
+
+  .catalogue__intro p {
+    font-size: 16px;
+  }
+
+  .catalogue__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .product-card {
+    transform: none;
+  }
 }

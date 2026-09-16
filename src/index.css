@@ -1,73 +1,58 @@
 :root {
   --bone: #141414;
   --bone-dim: #e9dcc4;
-
   --flint: #2b2622;
   --flint-soft: #4a423a;
-
   --rust: #6b3226;
   --clay: #8a5a34;
   --ember: #c1622d;
-
-  --border: rgba(146, 129, 116, 0.45);
+  --border: rgba(146, 129, 116, 0.651);
 
   --heading: 'Ranchers', Georgia, serif;
   --sans: 'Work Sans', system-ui, sans-serif;
 
   font: 18px/155% var(--sans);
 
-  color-scheme: dark;
-
   color: var(--bone-dim);
 
   background: #050505;
 
   font-synthesis: none;
-
   text-rendering: optimizeLegibility;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-/* =========================================================
-   GLOBAL RESET
-   ========================================================= */
-
-* {
-  box-sizing: border-box;
-}
-
-
 html {
   scroll-behavior: smooth;
-}
 
+  background: #050505;
+}
 
 body {
   margin: 0;
 
   min-width: 320px;
 
-  background: #000000;
+  overflow-x: hidden;
 
-  color: var(--bone-dim);
+  background: #050505;
 }
 
+body::after {
+  content: '';
 
-#root {
-  width: 100%;
+  position: fixed;
+  inset: 0;
 
-  max-width: 1200px;
+  z-index: 20;
 
-  margin: 0 auto;
+  background:
+    rgba(0, 0, 0, 0.12);
 
-  min-height: 100svh;
-
-  padding: 0 32px;
+  pointer-events: none;
 }
-
 
 @media (max-width: 1024px) {
   :root {
@@ -75,17 +60,14 @@ body {
   }
 }
 
-
-@media (max-width: 640px) {
-  #root {
-    padding: 0 20px;
-  }
+* {
+  box-sizing: border-box;
 }
 
-
-/* =========================================================
-   TYPOGRAPHY
-   ========================================================= */
+#root {
+  width: 100%;
+  min-height: 100svh;
+}
 
 h1,
 h2,
@@ -94,20 +76,16 @@ h3 {
 
   font-family: var(--heading);
 
-  color: var(--bone-dim);
+  color: var(--flint);
 }
-
 
 h1 {
   font-size: 52px;
-
   font-weight: 600;
 
   line-height: 1.08;
-
   letter-spacing: -0.5px;
 }
-
 
 @media (max-width: 1024px) {
   h1 {
@@ -115,15 +93,12 @@ h1 {
   }
 }
 
-
 h2 {
   font-size: 30px;
-
   font-weight: 600;
 
   line-height: 1.2;
 }
-
 
 @media (max-width: 1024px) {
   h2 {
@@ -131,13 +106,10 @@ h2 {
   }
 }
 
-
 h3 {
   font-size: 20px;
-
   font-weight: 600;
 }
-
 
 p {
   margin: 0;
@@ -145,18 +117,19 @@ p {
   max-width: 62ch;
 }
 
-
 a {
   color: var(--rust);
 }
 
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
 
-/* =========================================================
-   SELECTION
-   ========================================================= */
+:focus-visible {
+  outline:
+    2px solid
+    var(--ember);
 
-::selection {
-  background: rgba(193, 98, 45, 0.3);
-
-  color: #fff4df;
+  outline-offset: 4px;
 }

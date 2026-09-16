@@ -1,161 +1,254 @@
-/* =========================================================
-   HERO
-   ========================================================= */
-
 .hero {
   position: relative;
-  min-height: min(920px, 100svh);
-  display: grid;
-  align-items: center;
+  min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
-  border-bottom: 1px solid var(--border);
+  background: #050505;
 }
 
-/* Dark cinematic background */
-
-.hero__veil {
+.hero::before {
+  content: '';
   position: absolute;
   inset: 0;
   z-index: -2;
   background:
     radial-gradient(
-      circle at 50% 50%,
-      rgba(255, 255, 255, 0.025),
-      transparent 42%
+      circle at 72% 48%,
+      rgba(111, 69, 35, 0.14),
+      transparent 32%
     ),
-    #000000;
-  animation: scene-fade 1.1s ease both;
+    radial-gradient(
+      circle at 38% 48%,
+      rgba(255, 255, 255, 0.035),
+      transparent 38%
+    ),
+    #050505;
 }
 
-
-/* =========================================================
-   KNIFE
-   ========================================================= */
-
-.hero__knife-wrap {
+.hero::after {
+  content: '';
   position: absolute;
-  inset: 50% auto auto 50%;
-  width: min(96vw, 1600px);
-  aspect-ratio: 1774 / 887;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  animation: knife-enter 1.65s cubic-bezier(.16, 1, .3, 1) both;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.46),
+      transparent 43%,
+      rgba(0, 0, 0, 0.18)
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.34),
+      transparent 22%,
+      transparent 75%,
+      rgba(0, 0, 0, 0.48)
+    );
 }
+
+/* ---------------------------------------------------------
+   KNIFE
+--------------------------------------------------------- */
 
 .hero__knife {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: contrast(1.02) saturate(1.04);
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: min(1280px, 98vw);
+  transform: translate(-50%, -50%);
+  filter:
+    drop-shadow(0 24px 46px rgba(0, 0, 0, 0.76))
+    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55));
+  animation:
+    knife-reveal
+    1.55s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
 }
 
+.hero__knife img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
+/* ---------------------------------------------------------
+   DESKTOP NAVIGATION
+--------------------------------------------------------- */
 
 .site-nav {
   position: absolute;
+  z-index: 4;
 
   /*
-    The knife image is 1774 × 887.
-    The handle occupies the right side of the image,
-    so the navigation sits over that area.
+    The knife is centered in the viewport.
+
+    The hilt occupies the right side of the knife image,
+    so the navigation is deliberately positioned in that
+    same visual area rather than being attached to the
+    browser edge.
   */
-  top: 51%;
-  right: 7%;
+  top: calc(50% - 8px);
+  left: calc(50% + 310px);
 
-  width: auto;
-  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 25px;
 
-  z-index: 3;
-
-  opacity: 0;
+  transform: translateY(-50%);
 
   animation:
-    nav-enter
-    0.9s
-    0.85s
-    ease
-    forwards;
+    nav-emerge
+    0.95s
+    1.15s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
 }
+
+/*
+  This is the visual connection between the hilt and the
+  navigation.
+
+  It is intentionally subtle so the knife itself remains
+  the hero.
+*/
+.site-nav::before {
+  content: '';
+
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+
+  width: clamp(55px, 6vw, 90px);
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(193, 98, 45, 0.72)
+    );
+
+  transform-origin: right center;
+  animation:
+    hilt-line-emerge
+    0.8s
+    1.3s
+    ease-out
+    both;
+}
+
+/* Small TSB mark */
+
+.site-nav__brand {
+  position: relative;
+
+  color: var(--ember);
+
+  font-family: var(--heading);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.site-nav__brand:hover,
+.site-nav__brand:focus-visible {
+  color: var(--bone-dim);
+}
+
+/* Desktop links */
 
 .site-nav__links {
   display: flex;
   align-items: center;
-
-  gap: clamp(18px, 2.2vw, 34px);
-
-  white-space: nowrap;
+  gap: 27px;
 }
 
-.site-nav__link {
+.site-nav__links a {
   position: relative;
 
-  color: rgba(241, 226, 201, 0.9);
+  padding: 4px 0;
 
-  font-family: var(--sans);
-  font-size: clamp(9px, 0.65vw, 12px);
-  font-weight: 500;
+  color: rgba(233, 220, 196, 0.88);
 
-  letter-spacing: 0.18em;
+  font-family: var(--heading);
+  font-size: 13px;
+  letter-spacing: 1px;
 
-  text-transform: uppercase;
   text-decoration: none;
+  text-transform: uppercase;
 
   transition:
-    color 0.25s ease,
-    transform 0.25s ease;
+    color 0.2s ease,
+    opacity 0.2s ease;
 }
 
-
-/* Small separators between navigation items */
-
-.site-nav__link:not(:last-child)::after {
-  content: "•";
+.site-nav__links a::after {
+  content: '';
 
   position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-  right: calc(clamp(18px, 2.2vw, 34px) / -2);
+  height: 1px;
+
+  background: var(--ember);
+
+  transform: scaleX(0);
+  transform-origin: left center;
+
+  transition: transform 0.2s ease;
+}
+
+.site-nav__links a:hover,
+.site-nav__links a:focus-visible {
+  color: var(--bone-dim);
+}
+
+.site-nav__links a:hover::after,
+.site-nav__links a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Hidden until mobile */
+
+.site-nav__toggle,
+.mobile-menu {
+  display: none;
+}
+
+/* ---------------------------------------------------------
+   HERO COPY
+--------------------------------------------------------- */
+
+.hero__content {
+  position: absolute;
+  z-index: 3;
+
+  left: clamp(24px, 6vw, 96px);
   top: 50%;
 
-  transform: translate(50%, -55%);
+  width: min(470px, 35vw);
 
-  color: rgba(224, 194, 151, 0.55);
+  color: var(--bone-dim);
 
-  pointer-events: none;
-}
-
-
-/* Navigation hover */
-
-.site-nav__link:hover,
-.site-nav__link:focus-visible {
-  color: #fff4df;
-  transform: translateY(-2px);
-}
-
-
-/* =========================================================
-   HERO COPY
-   ========================================================= */
-
-.hero__copy {
-  width: min(600px, 48vw);
-
-  margin-left: clamp(12px, 5vw, 84px);
-  margin-top: 180px;
-
-  opacity: 0;
+  transform: translateY(-58%);
 
   animation:
-    copy-enter
+    copy-reveal
     1s
-    1s
-    ease
-    forwards;
+    0.65s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
 }
 
 .hero__eyebrow {
@@ -163,188 +256,121 @@
 
   color: var(--ember);
 
-  font-family: var(--sans);
-
-  font-size: 12px;
-  font-weight: 600;
-
-  letter-spacing: 0.2em;
-
-  text-transform: uppercase;
+  font-family: var(--heading);
+  font-size: 19px;
+  font-style: italic;
+  letter-spacing: 0.3px;
 }
 
-.hero__copy h1 {
+.hero h1 {
   color: var(--bone-dim);
+
   text-wrap: balance;
+
+  text-shadow:
+    0 3px 24px rgba(0, 0, 0, 0.72),
+    0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
-.hero__lede {
+.hero__description {
+  max-width: 45ch;
+
   margin-top: 22px;
 
-  max-width: 46ch;
-
-  color: rgba(233, 220, 196, 0.68);
+  color: rgba(233, 220, 196, 0.78);
 
   font-size: 17px;
+  line-height: 1.62;
+
+  text-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.82);
 }
 
 .hero__cta {
   display: inline-flex;
   align-items: center;
 
-  gap: 12px;
-
   margin-top: 30px;
-  padding: 12px 0;
+  padding: 11px 19px;
+
+  border: 1px solid rgba(233, 220, 196, 0.38);
+  border-radius: 2px;
 
   color: var(--bone-dim);
+  background: rgba(20, 20, 20, 0.34);
 
-  border-bottom: 1px solid rgba(233, 220, 196, 0.35);
-
+  font-family: var(--heading);
   font-size: 14px;
-  font-weight: 500;
-
-  letter-spacing: 0.08em;
+  letter-spacing: 0.7px;
 
   text-decoration: none;
 
+  backdrop-filter: blur(4px);
+
   transition:
-    border-color 0.25s ease,
-    color 0.25s ease;
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .hero__cta:hover,
 .hero__cta:focus-visible {
-  color: #fff;
+  color: var(--bone);
+
+  background: var(--ember);
   border-color: var(--ember);
+
+  transform: translateY(-1px);
 }
 
-
-/* =========================================================
+/* ---------------------------------------------------------
    SCROLL INDICATOR
-   ========================================================= */
+--------------------------------------------------------- */
 
 .hero__scroll {
   position: absolute;
 
-  right: clamp(18px, 4vw, 64px);
-  bottom: 28px;
+  left: 50%;
+  bottom: 24px;
 
-  display: grid;
-  gap: 8px;
+  z-index: 3;
 
-  color: rgba(233, 220, 196, 0.52);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 
-  font-size: 10px;
+  color: rgba(233, 220, 196, 0.58);
 
-  letter-spacing: 0.2em;
+  font-family: var(--heading);
+  font-size: 11px;
+  letter-spacing: 1.2px;
 
-  text-transform: uppercase;
   text-decoration: none;
+  text-transform: uppercase;
 
-  text-align: center;
-
-  opacity: 0;
+  transform: translateX(-50%);
 
   animation:
-    copy-enter
+    scroll-reveal
     0.8s
-    1.25s
-    ease
-    forwards;
+    1.6s
+    ease-out
+    both;
 }
 
-
-/* =========================================================
-   STORY / ABOUT
-   ========================================================= */
-
-.story {
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(280px, 0.7fr);
-
-  gap: clamp(40px, 8vw, 120px);
-
-  padding: 120px 0;
-
-  border-bottom: 1px solid var(--border);
-}
-
-.story h2 {
-  max-width: 13ch;
-  color: var(--bone-dim);
-}
-
-.story > p {
-  align-self: end;
-
-  color: rgba(233, 220, 196, 0.62);
-
-  font-size: 17px;
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.site-footer {
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: 24px;
-
-  padding: 34px 0 46px;
-
-  color: rgba(233, 220, 196, 0.5);
-
-  font-size: 13px;
-}
-
-.site-footer p {
-  margin: 0;
-}
-
-.site-footer a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.site-footer a:hover {
-  color: var(--bone-dim);
-}
-
-
-/* =========================================================
+/* ---------------------------------------------------------
    ANIMATIONS
-   ========================================================= */
+--------------------------------------------------------- */
 
-@keyframes scene-fade {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-
-@keyframes knife-enter {
+@keyframes knife-reveal {
   from {
     opacity: 0;
 
     transform:
-      translate(calc(-50% + 58px), -50%)
-      scale(0.985);
-  }
-
-  55% {
-    opacity: 0.86;
+      translate(-50%, -47%)
+      scale(0.965);
   }
 
   to {
@@ -356,24 +382,362 @@
   }
 }
 
-
-@keyframes nav-enter {
+@keyframes copy-reveal {
   from {
     opacity: 0;
-    transform: translateX(18px);
+
+    transform:
+      translateY(-45%)
+      translateX(-14px);
   }
 
   to {
     opacity: 1;
-    transform: translateX(0);
+
+    transform:
+      translateY(-58%)
+      translateX(0);
   }
 }
 
-
-@keyframes copy-enter {
+@keyframes nav-emerge {
   from {
     opacity: 0;
-    transform: translateY(14px);
+
+    transform:
+      translate(55px, -50%);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(0, -50%);
+  }
+}
+
+@keyframes hilt-line-emerge {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes scroll-reveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ---------------------------------------------------------
+   TABLET
+--------------------------------------------------------- */
+
+@media (max-width: 1100px) and (min-width: 701px) {
+  .hero__knife {
+    width: min(1120px, 108vw);
+  }
+
+  .hero__content {
+    width: min(400px, 38vw);
+  }
+
+  .site-nav {
+    left: auto;
+    right: 28px;
+
+    /*
+      On smaller desktop screens the hilt gets too close
+      to the edge, so we let the nav move outward while
+      keeping the connector visible.
+    */
+  }
+
+  .site-nav::before {
+    width: 52px;
+  }
+
+  .site-nav__links {
+    gap: 21px;
+  }
+}
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  .hero {
+    min-height: 100svh;
+  }
+
+  /*
+    The knife becomes a much larger visual element on
+    mobile. It remains the hero rather than becoming a
+    small decorative image.
+  */
+  .hero__knife {
+    top: 39%;
+
+    width: 145vw;
+    max-width: none;
+
+    transform: translate(-50%, -50%);
+  }
+
+  .hero::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.54),
+        transparent 20%,
+        transparent 45%,
+        rgba(0, 0, 0, 0.82) 69%,
+        rgba(0, 0, 0, 0.98) 100%
+      );
+  }
+
+  /* -----------------------------------------------
+     MOBILE NAV
+  ------------------------------------------------ */
+
+  .site-nav {
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 74px;
+
+    padding:
+      0
+      20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    transform: none;
+
+    animation:
+      nav-mobile-reveal
+      0.8s
+      1.1s
+      ease-out
+      both;
+  }
+
+  .site-nav::before,
+  .site-nav__links {
+    display: none;
+  }
+
+  .site-nav__brand {
+    font-size: 16px;
+  }
+
+  /*
+    Hamburger button
+  */
+
+  .site-nav__toggle {
+    width: 46px;
+    height: 46px;
+
+    padding: 11px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+
+    border: 1px solid rgba(233, 220, 196, 0.24);
+    border-radius: 50%;
+
+    color: var(--bone-dim);
+    background: rgba(8, 8, 8, 0.58);
+
+    backdrop-filter: blur(7px);
+
+    cursor: pointer;
+  }
+
+  .site-nav__toggle span {
+    display: block;
+
+    width: 100%;
+    height: 1px;
+
+    background: currentColor;
+
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  /*
+    Hamburger → X
+  */
+
+  .site-nav__toggle[aria-expanded='true']
+    span:nth-child(1) {
+    transform:
+      translateY(6px)
+      rotate(45deg);
+  }
+
+  .site-nav__toggle[aria-expanded='true']
+    span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .site-nav__toggle[aria-expanded='true']
+    span:nth-child(3) {
+    transform:
+      translateY(-6px)
+      rotate(-45deg);
+  }
+
+  /* -----------------------------------------------
+     MOBILE DROPDOWN
+  ------------------------------------------------ */
+
+  .mobile-menu {
+    position: absolute;
+
+    top: 84px;
+    right: 20px;
+
+    z-index: 5;
+
+    min-width: 190px;
+
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    border:
+      1px solid
+      rgba(233, 220, 196, 0.18);
+
+    border-radius: 12px;
+
+    background: rgba(8, 8, 8, 0.92);
+
+    box-shadow:
+      0 18px 42px rgba(0, 0, 0, 0.45);
+
+    backdrop-filter: blur(10px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translateY(-8px);
+
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .mobile-menu[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+
+    transform: translateY(0);
+  }
+
+  .mobile-menu a {
+    padding: 12px 14px;
+
+    color: var(--bone-dim);
+
+    font-family: var(--heading);
+    font-size: 14px;
+    letter-spacing: 0.8px;
+
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu a:hover,
+  .mobile-menu a:focus-visible {
+    color: var(--ember);
+  }
+
+  /* -----------------------------------------------
+     MOBILE COPY
+  ------------------------------------------------ */
+
+  .hero__content {
+    left: 20px;
+    right: 20px;
+
+    top: auto;
+    bottom: 72px;
+
+    width: auto;
+
+    transform: none;
+
+    animation:
+      copy-mobile-reveal
+      1s
+      0.65s
+      cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+  }
+
+  .hero__eyebrow {
+    margin-bottom: 10px;
+
+    font-size: 16px;
+  }
+
+  .hero h1 {
+    font-size: clamp(34px, 10vw, 46px);
+    line-height: 1.04;
+  }
+
+  .hero__description {
+    margin-top: 16px;
+
+    font-size: 15px;
+    line-height: 1.52;
+  }
+
+  .hero__cta {
+    margin-top: 22px;
+
+    padding:
+      11px
+      17px;
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------
+   MOBILE ANIMATIONS
+--------------------------------------------------------- */
+
+@keyframes nav-mobile-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 
   to {
@@ -382,123 +746,41 @@
   }
 }
 
+@keyframes copy-mobile-reveal {
+  from {
+    opacity: 0;
 
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-  .hero {
-    min-height: 760px;
-
-    align-items: end;
-
-    padding-bottom: 86px;
+    transform:
+      translateY(18px);
   }
 
-
-  .hero__knife-wrap {
-    top: 39%;
-    width: 118vw;
-  }
-
-
-  .site-nav {
-    top: 51%;
-    right: 5%;
-  }
-
-
-  .hero__copy {
-    width: min(560px, 72vw);
-
-    margin:
-      0
-      0
-      0
-      2vw;
-  }
-
-
-  .story {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 640px) {
-
-  .hero {
-    min-height: 720px;
-
-    padding-bottom: 56px;
-  }
-
-
-  .hero__knife-wrap {
-    top: 34%;
-
-    width: 165vw;
-
-    left: 49%;
-  }
-
-
-  .site-nav {
-    top: 51%;
-    right: 5%;
-  }
-
-
-  .site-nav__link {
-    font-size: 9px;
-    letter-spacing: 0.1em;
-  }
-
-
-  .hero__copy {
-    width: calc(100% - 10px);
-
-    margin-left: 5px;
-  }
-
-
-  .hero__lede {
-    font-size: 15px;
-  }
-
-
-  .story {
-    padding: 80px 0;
-  }
-
-
-  .site-footer {
-    display: grid;
-  }
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .hero__veil,
-  .hero__knife-wrap,
-  .site-nav,
-  .hero__copy,
-  .hero__scroll {
-    animation: none;
-
+  to {
     opacity: 1;
 
-    transform: none;
+    transform:
+      translateY(0);
+  }
+}
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__knife,
+  .site-nav,
+  .hero__content,
+  .hero__scroll {
+    animation: none;
+  }
+
+  .site-nav::before {
+    animation: none;
+  }
+
+  .hero__cta,
+  .site-nav__links a,
+  .site-nav__brand {
+    transition: none;
   }
 }
