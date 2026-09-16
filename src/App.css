@@ -1,3 +1,7 @@
+/* =========================================================
+   HERO
+========================================================= */
+
 .hero {
   position: relative;
   min-height: 100svh;
@@ -11,16 +15,17 @@
   position: absolute;
   inset: 0;
   z-index: -2;
+
   background:
     radial-gradient(
-      circle at 72% 48%,
-      rgba(111, 69, 35, 0.14),
-      transparent 32%
+      circle at 70% 48%,
+      rgba(111, 69, 35, 0.15),
+      transparent 34%
     ),
     radial-gradient(
       circle at 38% 48%,
       rgba(255, 255, 255, 0.035),
-      transparent 38%
+      transparent 40%
     ),
     #050505;
 }
@@ -30,41 +35,49 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+
   pointer-events: none;
+
   background:
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.46),
-      transparent 43%,
-      rgba(0, 0, 0, 0.18)
+      rgba(0, 0, 0, 0.58),
+      transparent 42%,
+      rgba(0, 0, 0, 0.24)
     ),
     linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.34),
+      rgba(0, 0, 0, 0.42),
       transparent 22%,
-      transparent 75%,
-      rgba(0, 0, 0, 0.48)
+      transparent 73%,
+      rgba(0, 0, 0, 0.62)
     );
 }
 
-/* ---------------------------------------------------------
+
+/* =========================================================
    KNIFE
---------------------------------------------------------- */
+========================================================= */
 
 .hero__knife {
   position: absolute;
   z-index: 0;
+
   top: 50%;
   left: 50%;
+
   width: min(1280px, 98vw);
+
   transform: translate(-50%, -50%);
+
   filter:
-    drop-shadow(0 24px 46px rgba(0, 0, 0, 0.76))
-    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55));
+    drop-shadow(0 26px 48px rgba(0, 0, 0, 0.78))
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.62));
+
   animation:
-    knife-reveal
-    1.55s
-    cubic-bezier(0.22, 1, 0.36, 1)
+    knife-slide-in
+    1.7s
+    cubic-bezier(0.16, 1, 0.3, 1)
     both;
 }
 
@@ -74,30 +87,90 @@
   height: auto;
 }
 
+
 /* ---------------------------------------------------------
-   DESKTOP NAVIGATION
+   KNIFE ENTRANCE
+
+   The knife begins off to the right and moves into its
+   final position. The slight rotation and overshoot give
+   it a physical "fall / settle" quality rather than a
+   generic fade.
 --------------------------------------------------------- */
+
+@keyframes knife-slide-in {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(38vw, -46%)
+      rotate(3deg)
+      scale(0.97);
+  }
+
+  62% {
+    opacity: 1;
+
+    transform:
+      translate(-52%, -50%)
+      rotate(-0.45deg)
+      scale(1.005);
+  }
+
+  82% {
+    transform:
+      translate(-49.2%, -50%)
+      rotate(0.12deg)
+      scale(1.001);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      rotate(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   DESKTOP NAVIGATION
+========================================================= */
 
 .site-nav {
   position: absolute;
   z-index: 4;
 
-  /*
-    The knife is centered in the viewport.
-
-    The hilt occupies the right side of the knife image,
-    so the navigation is deliberately positioned in that
-    same visual area rather than being attached to the
-    browser edge.
-  */
   top: calc(50% - 8px);
-  left: calc(50% + 310px);
+  left: 58%;
 
   display: flex;
   align-items: center;
-  gap: 25px;
 
-  transform: translateY(-50%);
+  gap: 22px;
+
+  padding: 9px 13px 9px 11px;
+
+  border:
+    1px solid
+    rgba(233, 220, 196, 0.22);
+
+  border-radius: 4px;
+
+  background:
+    rgba(5, 5, 5, 0.88);
+
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(0, 0, 0, 0.38) inset;
+
+  backdrop-filter: blur(8px);
+
+  transform: translate(
+    290px,
+    -50%
+  );
 
   animation:
     nav-emerge
@@ -107,40 +180,35 @@
     both;
 }
 
-/*
-  This is the visual connection between the hilt and the
-  navigation.
 
-  It is intentionally subtle so the knife itself remains
-  the hero.
-*/
+/* ---------------------------------------------------------
+   NAVIGATION ACCENT
+
+   Small amber mark gives the navigation a visual identity
+   without connecting it directly to the leather hilt.
+--------------------------------------------------------- */
+
 .site-nav::before {
   content: '';
 
   position: absolute;
-  right: calc(100% + 12px);
-  top: 50%;
 
-  width: clamp(55px, 6vw, 90px);
-  height: 1px;
+  left: -9px;
+  top: 10px;
+  bottom: 10px;
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(193, 98, 45, 0.72)
-    );
+  width: 2px;
 
-  transform-origin: right center;
-  animation:
-    hilt-line-emerge
-    0.8s
-    1.3s
-    ease-out
-    both;
+  background: var(--ember);
+
+  box-shadow:
+    0 0 10px rgba(193, 98, 45, 0.28);
 }
 
-/* Small TSB mark */
+
+/* ---------------------------------------------------------
+   BRAND MARK
+--------------------------------------------------------- */
 
 .site-nav__brand {
   position: relative;
@@ -150,6 +218,7 @@
   font-family: var(--heading);
   font-size: 15px;
   font-weight: 600;
+
   letter-spacing: 2px;
 
   text-decoration: none;
@@ -164,24 +233,28 @@
   color: var(--bone-dim);
 }
 
-/* Desktop links */
+
+/* ---------------------------------------------------------
+   DESKTOP LINKS
+--------------------------------------------------------- */
 
 .site-nav__links {
   display: flex;
   align-items: center;
-  gap: 27px;
+  gap: 25px;
 }
 
 .site-nav__links a {
   position: relative;
 
-  padding: 4px 0;
+  padding: 5px 0;
 
-  color: rgba(233, 220, 196, 0.88);
+  color: rgba(233, 220, 196, 0.92);
 
   font-family: var(--heading);
-  font-size: 13px;
-  letter-spacing: 1px;
+  font-size: 12px;
+
+  letter-spacing: 1.15px;
 
   text-decoration: none;
   text-transform: uppercase;
@@ -195,6 +268,7 @@
   content: '';
 
   position: absolute;
+
   left: 0;
   right: 0;
   bottom: 0;
@@ -211,7 +285,7 @@
 
 .site-nav__links a:hover,
 .site-nav__links a:focus-visible {
-  color: var(--bone-dim);
+  color: var(--bone);
 }
 
 .site-nav__links a:hover::after,
@@ -219,37 +293,46 @@
   transform: scaleX(1);
 }
 
-/* Hidden until mobile */
+
+/* ---------------------------------------------------------
+   MOBILE NAV ELEMENTS
+
+   Hidden on desktop.
+--------------------------------------------------------- */
 
 .site-nav__toggle,
 .mobile-menu {
   display: none;
 }
 
-/* ---------------------------------------------------------
-   HERO COPY
---------------------------------------------------------- */
 
-.hero__content {
+/* =========================================================
+   HERO TOP CONTENT
+========================================================= */
+
+.hero__top-content {
   position: absolute;
   z-index: 3;
 
   left: clamp(24px, 6vw, 96px);
-  top: 50%;
+  top: clamp(90px, 14vh, 150px);
 
-  width: min(470px, 35vw);
+  width: min(500px, 38vw);
 
   color: var(--bone-dim);
 
-  transform: translateY(-58%);
-
   animation:
-    copy-reveal
+    top-copy-reveal
     1s
-    0.65s
+    0.55s
     cubic-bezier(0.22, 1, 0.36, 1)
     both;
 }
+
+
+/* ---------------------------------------------------------
+   EYEBROW
+--------------------------------------------------------- */
 
 .hero__eyebrow {
   margin: 0 0 18px;
@@ -259,8 +342,14 @@
   font-family: var(--heading);
   font-size: 19px;
   font-style: italic;
+
   letter-spacing: 0.3px;
 }
+
+
+/* ---------------------------------------------------------
+   MAIN HEADING
+--------------------------------------------------------- */
 
 .hero h1 {
   color: var(--bone-dim);
@@ -272,10 +361,39 @@
     0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
+
+/* =========================================================
+   HERO BOTTOM CONTENT
+========================================================= */
+
+.hero__bottom-content {
+  position: absolute;
+  z-index: 3;
+
+  left: clamp(24px, 6vw, 96px);
+  bottom: clamp(90px, 13vh, 135px);
+
+  width: min(430px, 34vw);
+
+  color: var(--bone-dim);
+
+  animation:
+    bottom-copy-reveal
+    1s
+    0.85s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+
+/* ---------------------------------------------------------
+   DESCRIPTION
+--------------------------------------------------------- */
+
 .hero__description {
   max-width: 45ch;
 
-  margin-top: 22px;
+  margin: 0;
 
   color: rgba(233, 220, 196, 0.78);
 
@@ -285,6 +403,10 @@
   text-shadow:
     0 2px 14px rgba(0, 0, 0, 0.82);
 }
+
+/* ---------------------------------------------------------
+   HERO CTA
+--------------------------------------------------------- */
 
 .hero__cta {
   display: inline-flex;
@@ -297,7 +419,7 @@
   border-radius: 2px;
 
   color: var(--bone-dim);
-  background: rgba(20, 20, 20, 0.34);
+  background: rgba(15, 15, 15, 0.48);
 
   font-family: var(--heading);
   font-size: 14px;
@@ -305,7 +427,7 @@
 
   text-decoration: none;
 
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(5px);
 
   transition:
     background 0.2s ease,
@@ -324,9 +446,10 @@
   transform: translateY(-1px);
 }
 
-/* ---------------------------------------------------------
+
+/* =========================================================
    SCROLL INDICATOR
---------------------------------------------------------- */
+========================================================= */
 
 .hero__scroll {
   position: absolute;
@@ -339,12 +462,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   gap: 4px;
 
   color: rgba(233, 220, 196, 0.58);
 
   font-family: var(--heading);
   font-size: 11px;
+
   letter-spacing: 1.2px;
 
   text-decoration: none;
@@ -355,30 +480,29 @@
   animation:
     scroll-reveal
     0.8s
-    1.6s
+    1.65s
     ease-out
     both;
 }
 
-/* ---------------------------------------------------------
-   ANIMATIONS
---------------------------------------------------------- */
 
-@keyframes knife-reveal {
+/* =========================================================
+   HERO ANIMATIONS
+========================================================= */
+
+@keyframes nav-emerge {
   from {
     opacity: 0;
 
     transform:
-      translate(-50%, -47%)
-      scale(0.965);
+      translate(345px, -50%);
   }
 
   to {
     opacity: 1;
 
     transform:
-      translate(-50%, -50%)
-      scale(1);
+      translate(290px, -50%);
   }
 }
 
@@ -388,7 +512,7 @@
 
     transform:
       translateY(-45%)
-      translateX(-14px);
+      translateX(-16px);
   }
 
   to {
@@ -399,6 +523,106 @@
       translateX(0);
   }
 }
+
+@keyframes scroll-reveal {
+  from {
+    opacity: 0;
+
+    transform:
+      translate(-50%, 8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(-50%, 0);
+  }
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes knife-slide-in {
+  from {
+    opacity: 0;
+
+    transform:
+      translate(42vw, -50%)
+      rotate(2.5deg)
+      scale(0.98);
+  }
+
+  72% {
+    opacity: 1;
+
+    transform:
+      translate(calc(-51% + 8px), -50%)
+      rotate(-0.6deg)
+      scale(1.005);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg)
+      scale(1);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   TOP COPY REVEAL
+--------------------------------------------------------- */
+
+@keyframes top-copy-reveal {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-14px)
+      translateX(-14px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      translateX(0);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   BOTTOM COPY REVEAL
+--------------------------------------------------------- */
+
+@keyframes bottom-copy-reveal {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(18px)
+      translateX(-14px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      translateX(0);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   NAVIGATION REVEAL
+--------------------------------------------------------- */
 
 @keyframes nav-emerge {
   from {
@@ -416,35 +640,291 @@
   }
 }
 
-@keyframes hilt-line-emerge {
-  from {
-    opacity: 0;
-    transform: scaleX(0);
-  }
 
-  to {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-}
+/* ---------------------------------------------------------
+   SCROLL REVEAL
+--------------------------------------------------------- */
 
 @keyframes scroll-reveal {
   from {
     opacity: 0;
-    transform: translate(-50%, 8px);
+
+    transform:
+      translate(-50%, 8px);
   }
 
   to {
     opacity: 1;
-    transform: translate(-50%, 0);
+
+    transform:
+      translate(-50%, 0);
   }
 }
 
+/* =========================================================
+   ARTIST SECTION
+========================================================= */
+
+.artist {
+  position: relative;
+
+  padding:
+    clamp(90px, 10vw, 150px)
+    clamp(24px, 7vw, 110px);
+
+  background:
+    radial-gradient(
+      circle at 18% 45%,
+      rgba(111, 69, 35, 0.12),
+      transparent 32%
+    ),
+    #090909;
+
+  border-top:
+    1px solid
+    rgba(233, 220, 196, 0.08);
+}
+
+.artist__inner {
+  display: grid;
+
+  grid-template-columns:
+    minmax(280px, 0.85fr)
+    minmax(300px, 1fr);
+
+  align-items: center;
+
+  gap: clamp(50px, 8vw, 120px);
+
+  width: min(1180px, 100%);
+
+  margin: 0 auto;
+}
+
+
 /* ---------------------------------------------------------
-   TABLET
+   ARTIST IMAGE
 --------------------------------------------------------- */
 
+.artist__image {
+  width: 100%;
+}
+
+.artist__image-placeholder {
+  position: relative;
+
+  aspect-ratio: 4 / 5;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(233, 220, 196, 0.18);
+
+  background:
+    linear-gradient(
+      145deg,
+      #171512,
+      #0c0c0c
+    );
+
+  box-shadow:
+    0 24px 50px rgba(0, 0, 0, 0.42);
+
+  color: rgba(233, 220, 196, 0.5);
+
+  text-align: center;
+}
+
+.artist__image-placeholder::before {
+  content: '';
+
+  position: absolute;
+  inset: 12px;
+
+  border:
+    1px solid
+    rgba(193, 98, 45, 0.2);
+
+  pointer-events: none;
+}
+
+.artist__image-placeholder span {
+  font-family: var(--heading);
+
+  font-size: 17px;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.artist__image-placeholder small {
+  margin-top: 7px;
+
+  color: rgba(233, 220, 196, 0.32);
+
+  font-family: var(--sans);
+  font-size: 12px;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* ---------------------------------------------------------
+   ARTIST CONTENT
+--------------------------------------------------------- */
+
+.artist__content {
+  max-width: 560px;
+}
+
+.section-eyebrow {
+  margin: 0 0 14px;
+
+  color: var(--ember);
+
+  font-family: var(--heading);
+  font-size: 15px;
+  font-style: italic;
+
+  letter-spacing: 0.5px;
+}
+
+.artist h2,
+.contact h2 {
+  color: var(--bone-dim);
+
+  font-size: clamp(36px, 4vw, 58px);
+
+  line-height: 1.05;
+}
+
+.artist__content p:not(.section-eyebrow) {
+  margin-top: 24px;
+
+  color: rgba(233, 220, 196, 0.7);
+
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   CONTACT SECTION
+========================================================= */
+
+.contact {
+  position: relative;
+
+  padding:
+    clamp(90px, 10vw, 140px)
+    clamp(24px, 7vw, 110px);
+
+  background: #050505;
+
+  border-top:
+    1px solid
+    rgba(233, 220, 196, 0.08);
+}
+
+.contact__inner {
+  display: grid;
+
+  grid-template-columns:
+    minmax(280px, 1fr)
+    minmax(300px, 0.75fr);
+
+  gap: clamp(50px, 10vw, 150px);
+
+  width: min(1180px, 100%);
+
+  margin: 0 auto;
+}
+
+
+/* ---------------------------------------------------------
+   CONTACT INTRO
+--------------------------------------------------------- */
+
+.contact__heading {
+  max-width: 560px;
+}
+
+.contact__heading > p:not(.section-eyebrow) {
+  margin-top: 24px;
+
+  color: rgba(233, 220, 196, 0.7);
+
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+
+/* ---------------------------------------------------------
+   CONTACT DETAILS
+--------------------------------------------------------- */
+
+.contact__details {
+  display: flex;
+  flex-direction: column;
+
+  border-top:
+    1px solid
+    rgba(233, 220, 196, 0.16);
+}
+
+.contact__details a,
+.contact__details > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  padding: 22px 0;
+
+  border-bottom:
+    1px solid
+    rgba(233, 220, 196, 0.12);
+
+  text-decoration: none;
+}
+
+.contact__details span {
+  color: var(--ember);
+
+  font-family: var(--heading);
+  font-size: 12px;
+
+  letter-spacing: 1.2px;
+
+  text-transform: uppercase;
+}
+
+.contact__details strong {
+  color: var(--bone-dim);
+
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+
+  transition: color 0.2s ease;
+}
+
+.contact__details a:hover strong,
+.contact__details a:focus-visible strong {
+  color: var(--ember);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
 @media (max-width: 1100px) and (min-width: 701px) {
+
   .hero__knife {
     width: min(1120px, 108vw);
   }
@@ -454,63 +934,115 @@
   }
 
   .site-nav {
-    left: auto;
     right: 28px;
-
-    /*
-      On smaller desktop screens the hilt gets too close
-      to the edge, so we let the nav move outward while
-      keeping the connector visible.
-    */
-  }
-
-  .site-nav::before {
-    width: 52px;
   }
 
   .site-nav__links {
-    gap: 21px;
+    gap: 18px;
+  }
+
+  .site-nav__links a {
+    font-size: 11px;
+  }
+
+  .artist__inner,
+  .contact__inner {
+    gap: 60px;
   }
 }
 
-/* ---------------------------------------------------------
+
+/* =========================================================
    MOBILE
---------------------------------------------------------- */
+========================================================= */
 
 @media (max-width: 700px) {
+
+  /* -------------------------------------------------------
+     HERO
+  ------------------------------------------------------- */
+
   .hero {
     min-height: 100svh;
   }
 
-  /*
-    The knife becomes a much larger visual element on
-    mobile. It remains the hero rather than becoming a
-    small decorative image.
-  */
   .hero__knife {
-    top: 39%;
+    top: 38%;
+
+    left: 50%;
 
     width: 145vw;
     max-width: none;
 
-    transform: translate(-50%, -50%);
+    transform:
+      translate(-50%, -50%);
   }
 
   .hero::after {
     background:
       linear-gradient(
         180deg,
-        rgba(0, 0, 0, 0.54),
-        transparent 20%,
-        transparent 45%,
-        rgba(0, 0, 0, 0.82) 69%,
+        rgba(0, 0, 0, 0.55),
+        transparent 18%,
+        transparent 43%,
+        rgba(0, 0, 0, 0.78) 67%,
         rgba(0, 0, 0, 0.98) 100%
       );
   }
 
-  /* -----------------------------------------------
+
+  /* -------------------------------------------------------
+     MOBILE KNIFE ANIMATION
+  ------------------------------------------------------- */
+
+  @keyframes knife-slide-in-mobile {
+    0% {
+      opacity: 0;
+
+      transform:
+        translate(45vw, -47%)
+        rotate(4deg)
+        scale(0.96);
+    }
+
+    65% {
+      opacity: 1;
+
+      transform:
+        translate(-51%, -50%)
+        rotate(-0.5deg)
+        scale(1.005);
+    }
+
+    82% {
+      transform:
+        translate(-49.5%, -50%)
+        rotate(0.15deg)
+        scale(1.001);
+    }
+
+    100% {
+      opacity: 1;
+
+      transform:
+        translate(-50%, -50%)
+        rotate(0)
+        scale(1);
+    }
+  }
+
+  .hero__knife {
+    animation:
+      knife-slide-in-mobile
+      1.55s
+      cubic-bezier(0.16, 1, 0.3, 1)
+      both;
+  }
+
+
+  /* -------------------------------------------------------
      MOBILE NAV
-  ------------------------------------------------ */
+  ------------------------------------------------------- */
 
   .site-nav {
     top: 0;
@@ -519,26 +1051,37 @@
 
     height: 74px;
 
-    padding:
-      0
-      20px;
+    padding: 0 20px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    border: 0;
+    border-radius: 0;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(5, 5, 5, 0.78),
+        transparent
+      );
+
+    box-shadow: none;
+
+    backdrop-filter: none;
 
     transform: none;
 
     animation:
       nav-mobile-reveal
       0.8s
-      1.1s
+      1.05s
       ease-out
       both;
   }
 
-  .site-nav::before,
-  .site-nav__links {
+  .site-nav::before {
     display: none;
   }
 
@@ -546,9 +1089,14 @@
     font-size: 16px;
   }
 
-  /*
-    Hamburger button
-  */
+  .site-nav__links {
+    display: none;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE MENU BUTTON
+  ------------------------------------------------------- */
 
   .site-nav__toggle {
     width: 46px;
@@ -559,15 +1107,24 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     gap: 5px;
 
-    border: 1px solid rgba(233, 220, 196, 0.24);
+    border:
+      1px solid
+      rgba(233, 220, 196, 0.28);
+
     border-radius: 50%;
 
     color: var(--bone-dim);
-    background: rgba(8, 8, 8, 0.58);
 
-    backdrop-filter: blur(7px);
+    background:
+      rgba(8, 8, 8, 0.72);
+
+    box-shadow:
+      0 8px 25px rgba(0, 0, 0, 0.32);
+
+    backdrop-filter: blur(8px);
 
     cursor: pointer;
   }
@@ -584,10 +1141,6 @@
       transform 0.2s ease,
       opacity 0.2s ease;
   }
-
-  /*
-    Hamburger → X
-  */
 
   .site-nav__toggle[aria-expanded='true']
     span:nth-child(1) {
@@ -608,9 +1161,10 @@
       rotate(-45deg);
   }
 
-  /* -----------------------------------------------
+
+  /* -------------------------------------------------------
      MOBILE DROPDOWN
-  ------------------------------------------------ */
+  ------------------------------------------------------- */
 
   .mobile-menu {
     position: absolute;
@@ -618,30 +1172,33 @@
     top: 84px;
     right: 20px;
 
-    z-index: 5;
+    z-index: 6;
 
-    min-width: 190px;
+    min-width: 200px;
 
     padding: 8px;
 
     display: flex;
     flex-direction: column;
+
     gap: 2px;
 
     border:
       1px solid
-      rgba(233, 220, 196, 0.18);
+      rgba(233, 220, 196, 0.2);
 
-    border-radius: 12px;
+    border-radius: 8px;
 
-    background: rgba(8, 8, 8, 0.92);
+    background:
+      rgba(8, 8, 8, 0.94);
 
     box-shadow:
-      0 18px 42px rgba(0, 0, 0, 0.45);
+      0 20px 45px rgba(0, 0, 0, 0.55);
 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
 
     opacity: 0;
+
     pointer-events: none;
 
     transform: translateY(-8px);
@@ -653,18 +1210,20 @@
 
   .mobile-menu[data-open='true'] {
     opacity: 1;
+
     pointer-events: auto;
 
     transform: translateY(0);
   }
 
   .mobile-menu a {
-    padding: 12px 14px;
+    padding: 13px 14px;
 
     color: var(--bone-dim);
 
     font-family: var(--heading);
     font-size: 14px;
+
     letter-spacing: 0.8px;
 
     text-decoration: none;
@@ -676,9 +1235,10 @@
     color: var(--ember);
   }
 
-  /* -----------------------------------------------
-     MOBILE COPY
-  ------------------------------------------------ */
+
+  /* -------------------------------------------------------
+     MOBILE HERO COPY
+  ------------------------------------------------------- */
 
   .hero__content {
     left: 20px;
@@ -694,7 +1254,7 @@
     animation:
       copy-mobile-reveal
       1s
-      0.65s
+      0.6s
       cubic-bezier(0.22, 1, 0.36, 1)
       both;
   }
@@ -707,6 +1267,7 @@
 
   .hero h1 {
     font-size: clamp(34px, 10vw, 46px);
+
     line-height: 1.04;
   }
 
@@ -720,29 +1281,102 @@
   .hero__cta {
     margin-top: 22px;
 
-    padding:
-      11px
-      17px;
+    padding: 11px 17px;
   }
 
   .hero__scroll {
     display: none;
   }
+
+
+  /* -------------------------------------------------------
+     MOBILE ARTIST
+  ------------------------------------------------------- */
+
+  .artist {
+    padding:
+      80px 20px
+      90px;
+  }
+
+  .artist__inner {
+    display: flex;
+    flex-direction: column;
+
+    gap: 42px;
+
+    align-items: stretch;
+  }
+
+  .artist__image-placeholder {
+    aspect-ratio: 1 / 1;
+  }
+
+  .artist__content {
+    max-width: none;
+  }
+
+  .artist h2,
+  .contact h2 {
+    font-size: clamp(36px, 12vw, 50px);
+  }
+
+  .artist__content p:not(.section-eyebrow) {
+    margin-top: 20px;
+
+    font-size: 15px;
+    line-height: 1.68;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE CONTACT
+  ------------------------------------------------------- */
+
+  .contact {
+    padding:
+      80px 20px
+      90px;
+  }
+
+  .contact__inner {
+    display: flex;
+    flex-direction: column;
+
+    gap: 44px;
+  }
+
+  .contact__heading > p:not(.section-eyebrow) {
+    margin-top: 20px;
+
+    font-size: 15px;
+    line-height: 1.68;
+  }
+
+  .contact__details a,
+  .contact__details > div {
+    padding: 20px 0;
+  }
 }
 
-/* ---------------------------------------------------------
+
+/* =========================================================
    MOBILE ANIMATIONS
---------------------------------------------------------- */
+========================================================= */
 
 @keyframes nav-mobile-reveal {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+
+    transform:
+      translateY(-10px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+
+    transform:
+      translateY(0);
   }
 }
 
@@ -762,11 +1396,13 @@
   }
 }
 
-/* ---------------------------------------------------------
+
+/* =========================================================
    REDUCED MOTION
---------------------------------------------------------- */
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .hero__knife,
   .site-nav,
   .hero__content,
@@ -780,7 +1416,9 @@
 
   .hero__cta,
   .site-nav__links a,
-  .site-nav__brand {
+  .site-nav__brand,
+  .site-nav__toggle span,
+  .mobile-menu {
     transition: none;
   }
 }
