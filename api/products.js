@@ -46,6 +46,7 @@ export default async function handler(req, res) {
 
         return {
           id: obj.id,
+          variationId: item.variations?.[0]?.id || null,
           name: item.name || "Untitled piece",
           description: item.description || "",
           price: priceMoney
