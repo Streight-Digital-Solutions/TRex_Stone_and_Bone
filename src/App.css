@@ -1,43 +1,504 @@
+/* =========================================================
+   HERO
+   ========================================================= */
+
 .hero {
   position: relative;
-  padding: 120px 0 80px;
+  min-height: min(920px, 100svh);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
   border-bottom: 1px solid var(--border);
 }
 
-.hero__backdrop {
+/* Dark cinematic background */
+
+.hero__veil {
   position: absolute;
-  inset: -32px -32px auto -32px;
-  height: calc(100% + 32px);
-  background: repeating-linear-gradient(
-      100deg,
-      rgba(43, 38, 34, 0.05) 0px,
-      rgba(43, 38, 34, 0.05) 2px,
-      transparent 2px,
-      transparent 34px
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.025),
+      transparent 42%
     ),
-    linear-gradient(160deg, var(--bone-dim) 0%, var(--bone) 60%);
+    #000000;
+  animation: scene-fade 1.1s ease both;
+}
+
+
+/* =========================================================
+   KNIFE
+   ========================================================= */
+
+.hero__knife-wrap {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: min(96vw, 1600px);
+  aspect-ratio: 1774 / 887;
+  transform: translate(-50%, -50%);
   z-index: -1;
+  animation: knife-enter 1.65s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.hero__knife {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: contrast(1.02) saturate(1.04);
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.site-nav {
+  position: absolute;
+
+  /*
+    The knife image is 1774 × 887.
+    The handle occupies the right side of the image,
+    so the navigation sits over that area.
+  */
+  top: 51%;
+  right: 7%;
+
+  width: auto;
+  height: auto;
+
+  z-index: 3;
+
+  opacity: 0;
+
+  animation:
+    nav-enter
+    0.9s
+    0.85s
+    ease
+    forwards;
+}
+
+.site-nav__links {
+  display: flex;
+  align-items: center;
+
+  gap: clamp(18px, 2.2vw, 34px);
+
+  white-space: nowrap;
+}
+
+.site-nav__link {
+  position: relative;
+
+  color: rgba(241, 226, 201, 0.9);
+
+  font-family: var(--sans);
+  font-size: clamp(9px, 0.65vw, 12px);
+  font-weight: 500;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+/* Small separators between navigation items */
+
+.site-nav__link:not(:last-child)::after {
+  content: "•";
+
+  position: absolute;
+
+  right: calc(clamp(18px, 2.2vw, 34px) / -2);
+  top: 50%;
+
+  transform: translate(50%, -55%);
+
+  color: rgba(224, 194, 151, 0.55);
+
+  pointer-events: none;
+}
+
+
+/* Navigation hover */
+
+.site-nav__link:hover,
+.site-nav__link:focus-visible {
+  color: #fff4df;
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   HERO COPY
+   ========================================================= */
+
+.hero__copy {
+  width: min(600px, 48vw);
+
+  margin-left: clamp(12px, 5vw, 84px);
+  margin-top: 180px;
+
+  opacity: 0;
+
+  animation:
+    copy-enter
+    1s
+    1s
+    ease
+    forwards;
 }
 
 .hero__eyebrow {
-  font-family: var(--heading);
-  font-style: italic;
-  color: var(--rust);
-  font-size: 20px;
-  margin-bottom: 16px;
+  margin: 0 0 18px;
+
+  color: var(--ember);
+
+  font-family: var(--sans);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.2em;
+
+  text-transform: uppercase;
 }
 
-.hero p {
-  margin-top: 20px;
-  font-size: 20px;
-  color: var(--flint-soft);
+.hero__copy h1 {
+  color: var(--bone-dim);
+  text-wrap: balance;
 }
 
-.hero__note {
-  margin-top: 32px;
-  display: inline-block;
-  padding: 10px 18px;
-  border: 1px dashed var(--border);
-  font-size: 15px;
-  color: var(--clay);
+.hero__lede {
+  margin-top: 22px;
+
+  max-width: 46ch;
+
+  color: rgba(233, 220, 196, 0.68);
+
+  font-size: 17px;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 30px;
+  padding: 12px 0;
+
+  color: var(--bone-dim);
+
+  border-bottom: 1px solid rgba(233, 220, 196, 0.35);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  letter-spacing: 0.08em;
+
+  text-decoration: none;
+
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.hero__cta:hover,
+.hero__cta:focus-visible {
+  color: #fff;
+  border-color: var(--ember);
+}
+
+
+/* =========================================================
+   SCROLL INDICATOR
+   ========================================================= */
+
+.hero__scroll {
+  position: absolute;
+
+  right: clamp(18px, 4vw, 64px);
+  bottom: 28px;
+
+  display: grid;
+  gap: 8px;
+
+  color: rgba(233, 220, 196, 0.52);
+
+  font-size: 10px;
+
+  letter-spacing: 0.2em;
+
+  text-transform: uppercase;
+  text-decoration: none;
+
+  text-align: center;
+
+  opacity: 0;
+
+  animation:
+    copy-enter
+    0.8s
+    1.25s
+    ease
+    forwards;
+}
+
+
+/* =========================================================
+   STORY / ABOUT
+   ========================================================= */
+
+.story {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(280px, 0.7fr);
+
+  gap: clamp(40px, 8vw, 120px);
+
+  padding: 120px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.story h2 {
+  max-width: 13ch;
+  color: var(--bone-dim);
+}
+
+.story > p {
+  align-self: end;
+
+  color: rgba(233, 220, 196, 0.62);
+
+  font-size: 17px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 34px 0 46px;
+
+  color: rgba(233, 220, 196, 0.5);
+
+  font-size: 13px;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--bone-dim);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes scene-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes knife-enter {
+  from {
+    opacity: 0;
+
+    transform:
+      translate(calc(-50% + 58px), -50%)
+      scale(0.985);
+  }
+
+  55% {
+    opacity: 0.86;
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+}
+
+
+@keyframes nav-enter {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+@keyframes copy-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .hero {
+    min-height: 760px;
+
+    align-items: end;
+
+    padding-bottom: 86px;
+  }
+
+
+  .hero__knife-wrap {
+    top: 39%;
+    width: 118vw;
+  }
+
+
+  .site-nav {
+    top: 51%;
+    right: 5%;
+  }
+
+
+  .hero__copy {
+    width: min(560px, 72vw);
+
+    margin:
+      0
+      0
+      0
+      2vw;
+  }
+
+
+  .story {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  .hero {
+    min-height: 720px;
+
+    padding-bottom: 56px;
+  }
+
+
+  .hero__knife-wrap {
+    top: 34%;
+
+    width: 165vw;
+
+    left: 49%;
+  }
+
+
+  .site-nav {
+    top: 51%;
+    right: 5%;
+  }
+
+
+  .site-nav__link {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+
+  .hero__copy {
+    width: calc(100% - 10px);
+
+    margin-left: 5px;
+  }
+
+
+  .hero__lede {
+    font-size: 15px;
+  }
+
+
+  .story {
+    padding: 80px 0;
+  }
+
+
+  .site-footer {
+    display: grid;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero__veil,
+  .hero__knife-wrap,
+  .site-nav,
+  .hero__copy,
+  .hero__scroll {
+    animation: none;
+
+    opacity: 1;
+
+    transform: none;
+  }
 }
