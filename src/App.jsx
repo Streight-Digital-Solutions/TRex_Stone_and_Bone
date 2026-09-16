@@ -89,7 +89,7 @@ function App() {
 
         <div className="hero__top-content">
           <p className="hero__eyebrow">
-            Rex Stone &amp; Bone Tools
+            T-Rex Stone &amp; Bone Tools
           </p>
 
           <h1>
@@ -207,19 +207,19 @@ function App() {
           </div>
 
           <div className="contact__details">
-            <a href="mailto:CONTACT_EMAIL">
+            <a href="mailto:terryg8532@gmail.com">
               <span>Email</span>
-              <strong>CONTACT_EMAIL</strong>
+              <strong>terryg8532@gmail.com</strong>
             </a>
 
-            <a href="tel:CONTACT_PHONE">
+            <a href="tel:+12364126631">
               <span>Phone</span>
-              <strong>CONTACT_PHONE</strong>
+              <strong>+1 (236) 412-6631</strong>
             </a>
 
             <div>
               <span>Location</span>
-              <strong>LOCATION</strong>
+              <strong>Comox, BC</strong>
             </div>
           </div>
         </div>
