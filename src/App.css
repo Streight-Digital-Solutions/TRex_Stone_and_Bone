@@ -926,7 +926,7 @@
 @media (max-width: 1100px) and (min-width: 701px) {
 
   .hero__knife {
-    width: min(1120px, 108vw);
+    width: 100%;
   }
 
   .hero__content {
@@ -967,11 +967,11 @@
   }
 
   .hero__knife {
-    top: 38%;
+    top: 50%;
 
     left: 50%;
 
-    width: 145vw;
+    width: 100%;
     max-width: none;
 
     transform:
